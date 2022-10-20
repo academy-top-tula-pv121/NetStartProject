@@ -8,24 +8,32 @@ namespace NetStartProject
     {
         static async Task MyRequestAsync()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://top-academy.ru");
-            HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync();
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://top-academy.ru");
+        //    HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync();
 
-            request.Credentials = new NetworkCredential("login", "password");
+        //    request.Credentials = new NetworkCredential("login", "password");
 
-            using(StreamReader sr = new StreamReader(response.GetResponseStream()))
-            {
-                //Console.WriteLine(sr.ReadToEnd());
-            }
+        //    using(StreamReader sr = new StreamReader(response.GetResponseStream()))
+        //    {
+        //        //Console.WriteLine(sr.ReadToEnd());
+        //    }
 
-            WebHeaderCollection webHeader = response.Headers;
-            for(int i = 0; i < webHeader.Count; i++)
-                Console.WriteLine($"{webHeader.GetKey(i)} - {webHeader[i]}");
+        //    WebHeaderCollection webHeader = response.Headers;
+        //    for(int i = 0; i < webHeader.Count; i++)
+        //        Console.WriteLine($"{webHeader.GetKey(i)} - {webHeader[i]}");
         }
         static async Task Main(string[] args)
         {
             //WebClientExample.Run();
-            await MyRequestAsync();
+            //await MyRequestAsync();
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage response = await client.GetAsync("https://top-academy.ru");
+
+            Console.WriteLine($"Status code: {response.StatusCode}");
+            string str = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(str);
         }
     }
 }
